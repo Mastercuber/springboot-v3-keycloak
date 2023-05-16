@@ -5,7 +5,7 @@
     <title>Fehler</title>
 </head>
 <body>
-<p>Ein Fehler ist aufgetreten</p>
+<p>Error occurred</p>
 <div th:if="${#fields.hasAnyErrors()}">
     <ul>
         <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
