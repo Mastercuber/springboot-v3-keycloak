@@ -1,4 +1,4 @@
-package com.example.springbootkeycloak;
+package de.avensio.keycloak;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fehler</title>
+</head>
+<body>
+<p>Ein Fehler ist aufgetreten</p>
+<div th:if="${#fields.hasAnyErrors()}">
+    <ul>
+        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+    </ul>
+</div>
+</body>
+</html>
