@@ -38,12 +38,12 @@ openssl req -new -sha256 -newkey rsa:4096 -keyout localhost-rsa.key -out localho
 # Sign the CSR with the previously generated CA
 openssl x509 -req -CA ca-cert -CAkey ca-key -in localhost-rsa.csr -out localhost-rsa.pem -days 365 -CAcreateserial -passin pass:changeit -extfile cert.cnf -extensions v3_req
 
-# Zertifikatskette zusammenfügen
+# Merge to certificate chain
 cat localhost-rsa.pem ca-cert > localhost-rsa.chain.pem
-# Zertifikat zu KeyStore umwandeln
+# Convert cert to keystore
 openssl pkcs12 -export -in localhost-rsa.chain.pem -inkey localhost-rsa.key -out keystore.p12 -name localhost -CAfile ca-cert -caname rootca
 
-# CA Zertifikat in TrustStore umwandeln
+# Convert CA certificate to truststore
 keytool -import -file ca-cert -keystore truststore.p12 -alias ca-cert
 
 mv keystore.p12 src/main/resources/
