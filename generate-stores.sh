@@ -30,12 +30,12 @@ EOF
 
 
 
-# CA Schlüssel und Zertifikat generieren
+# Generate CA private key and certificate
 openssl req -new -x509 -keyout ca-key -out ca-cert
 
-# Geheimen RSA Schlüssel und Zertifikatsanfrage generieren
+# Generate RSA private key and Certificate Signing Request (CSR)
 openssl req -new -sha256 -newkey rsa:4096 -keyout localhost-rsa.key -out localhost-rsa.csr -extensions v3_req -config cert.cnf
-# Die Zertifikatsanfrage kann nun signiert werden mit der zuvor generierten CA
+# Sign the CSR with the previously generated CA
 openssl x509 -req -CA ca-cert -CAkey ca-key -in localhost-rsa.csr -out localhost-rsa.pem -days 365 -CAcreateserial -passin pass:changeit -extfile cert.cnf -extensions v3_req
 
 # Zertifikatskette zusammenfügen
@@ -45,3 +45,6 @@ openssl pkcs12 -export -in localhost-rsa.chain.pem -inkey localhost-rsa.key -out
 
 # CA Zertifikat in TrustStore umwandeln
 keytool -import -file ca-cert -keystore truststore.p12 -alias ca-cert
+
+mv keystore.p12 src/main/resources/
+mv truststore.p12 src/main/resources/
